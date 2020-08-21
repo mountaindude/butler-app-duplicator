@@ -1,5 +1,10 @@
 kind: pipeline
-name: default
+type: docker
+name: linux-amd64
+
+platform:
+  arch: amd64
+  os: linux
 
 steps:
 - name: docker  
@@ -10,12 +15,105 @@ steps:
     password:
       from_secret: dockerhub_password
     repo: ptarmiganlabs/butler-app-duplicator
-    dockerfile: Dockerfile
+    dockerfile: docker/Dockerfile.amd64
     context: 
-    # auto_tag: true
-    tags:
-    - latest
-    - '3.0.3'
+    auto_tag: true
+    auto_tag_suffix: linux-amd64
+
   when:
     event:
+    - push
     - tag
+
+
+---
+kind: pipeline
+type: docker
+name: linux-arm64
+
+platform:
+  arch: arm64
+  os: linux
+
+
+steps:
+- name: docker  
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: dockerhub_username
+    password:
+      from_secret: dockerhub_password
+    repo: ptarmiganlabs/butler-app-duplicator
+    dockerfile: docker/Dockerfile.arm64
+    context: 
+    auto_tag: true
+    auto_tag_suffix: linux-arm64
+
+  when:
+    event:
+    - push
+    - tag
+
+depends_on:
+- linux-amd64
+
+
+---
+kind: pipeline
+type: docker
+name: linux-arm
+
+platform:
+  arch: arm
+  os: linux
+
+steps:
+- name: docker  
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: dockerhub_username
+    password:
+      from_secret: dockerhub_password
+    repo: ptarmiganlabs/butler-app-duplicator
+    dockerfile: docker/Dockerfile.arm
+    context: 
+    auto_tag: true
+    auto_tag_suffix: linux-arm
+
+  when:
+    event:
+    - push
+    - tag
+
+depends_on:
+- linux-amd64
+
+
+
+---
+kind: pipeline
+type: docker
+name: manifest
+
+steps:
+- name: publish
+  image: plugins/manifest:1.2
+  settings:
+    auto_tag: true
+    ignore_missing: true
+    spec: docker/manifest.tmpl
+    username:
+      from_secret: dockerhub_username
+    password:
+      from_secret: dockerhub_password
+
+trigger:
+  event:
+  - push
+  - tag
+
+depends_on:
+- linux-arm64
+- linux-arm

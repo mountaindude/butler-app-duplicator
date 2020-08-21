@@ -9,12 +9,11 @@ LABEL description="Docker image providing app wizard/creation services for Qlik 
 WORKDIR /nodeapp
 
 # Install app dependencies separately (creating a separate layer for node_modules, effectively caching them between image rebuilds)
-COPY package.json .
+COPY ../package.json .
 RUN npm install
 
 # Copy app's source files
-COPY . .
-
+COPY ../. .
 
 # Create and use non-root user 
 RUN groupadd -r nodejs \
@@ -23,6 +22,6 @@ RUN groupadd -r nodejs \
 USER nodejs
 
 # Set up Docker healthcheck
-HEALTHCHECK --interval=12s --timeout=12s --start-period=30s CMD ["node", "healthcheck.js"]
+HEALTHCHECK --interval=12s --timeout=12s --start-period=30s CMD ["node", "docker-healthcheck.js"]
 
 CMD ["node", "index.js"]
