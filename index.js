@@ -131,12 +131,14 @@ restServer.listen(config.get('restAPIPort'), function() {
     logger.info(`${restServer.name} listening at ${restServer.url}`);
 });
 
+
 // Set up Docker healthcheck server
 // Create restServer object
 var restServerDockerHealth = restify.createServer({
     name: 'Docker healthcheck for Butler App Duplicator',
     version: appVersion,
 });
+
 
 // Enable parsing of http parameters
 restServerDockerHealth.use(restify.plugins.queryParser());
@@ -154,10 +156,15 @@ restServerDockerHealth.get(
     },
 );
 
-// Start Docker healthcheck REST server on port 12398
-restServerDockerHealth.listen(12398, function() {
-    logger.info(`Docker healthcheck server now listening on ${restServerDockerHealth.url}`);
-});
+// Start Docker healthcheck REST server on port set in config file
+if (config.get('dockerHealthCheck.enabled') == true) {
+    logger.verbose('MAIN: Starting Docker healthcheck server...');
+
+    restServerDockerHealth.listen(config.get('dockerHealthCheck.port'), function () {
+        logger.info(`Docker healthcheck server now listening on ${restServerDockerHealth.url}`);
+    });
+};
+
 
 // Create custom property (unless it already exists) used to identify template apps
 let qrsInstanceCustomPropertyCheck1 = new qrsInteract(configQRS);

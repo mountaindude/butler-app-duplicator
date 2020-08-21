@@ -1,8 +1,9 @@
+const config = require('config');
 var httpHealth = require("http");
 
 var optionsHealth = {  
     host : "localhost",
-    port : "12398",
+    port : config.get('dockerHealthCheck.port'),
     timeout : 2000
 };
 
