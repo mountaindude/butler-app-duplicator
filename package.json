@@ -1,7 +1,7 @@
 {
-  "name": "template_app_duplicate",
+  "name": "butler_app_duplicator",
   "version": "3.0.3",
-  "description": "Node.js app for duplicating and customising Qlike Sense apps",
+  "description": "Cross platform tool handling back-end tasks related to creating new Qlik Sense apps, using existing apps as templates",
   "main": "index.js",
   "scripts": {
     "test": "node_modules/jshint/bin/jshint index.js"
@@ -26,6 +26,11 @@
   "dependencies": {
     "config": "^3.3.0",
     "enigma.js": "^2.6.3",
+    "eslint": "^8.38.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",    
     "js-yaml": "^4.0.0",
     "jshint": "^2.13.4",
     "json-query": "^2.2.0",
@@ -41,6 +46,13 @@
   "devDependencies": {
     "chai": "4.3.6",
     "mocha": "10.0.0",
-    "supertest": "4.0.2"
+    "supertest": "4.0.2",
+    "prettier": "^2.8.7",
+    "snyk": "^1.1142.0"
+  },
+  "pkg": {
+    "scripts": [
+      "node_modules/enigma.js/**/*.json"
+    ]
   }
 }

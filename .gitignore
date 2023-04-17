@@ -1,4 +1,13 @@
-# Do not store config file in git
+# Project specific ignores
+build/
+cert/
+.vscode/launch.json
+img/**
+img/**
+.DS_Store
+bin/*
+.DS_Store
+snyk.sarif
 default.json
 default.yaml
 production.json
@@ -11,6 +20,10 @@ log
 logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
 
 # Runtime data
 pids
