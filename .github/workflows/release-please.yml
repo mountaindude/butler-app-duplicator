@@ -107,7 +107,7 @@ jobs:
 
       - name: VirusTotal Scan
         if: ${{ steps.release.outputs.release_created }}
-        uses: crazy-max/ghaction-virustotal@v3
+        uses: crazy-max/ghaction-virustotal@v4
         with:
           vt_api_key: ${{ secrets.VIRUSTOTAL_API_KEY }}
           request_rate: 4
