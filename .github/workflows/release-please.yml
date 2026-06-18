@@ -51,7 +51,7 @@ jobs:
 
       - name: Checkout repository
         if: github.repository_owner == 'ptarmiganlabs'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
 
       - name: Install dependencies
         run: |
@@ -161,7 +161,7 @@ jobs:
           echo "upload_url : ${{ needs.release-please.outputs.release_upload_url }}"
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -249,7 +249,7 @@ jobs:
           Write-Output 'upload_url      : ${{ needs.release-please.outputs.release_upload_url }}'
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -327,7 +327,7 @@ jobs:
           echo "upload_url : ${{ needs.release-please.outputs.release_upload_url }}"
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
 
       - name: Setup node
         uses: actions/setup-node@v3
